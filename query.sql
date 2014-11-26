@@ -16,6 +16,7 @@ LOAD DATA LOCAL INFILE 'Z:\\home\\user\\Projects\\analog\\Analogs.txt'
 INTO TABLE `temp`.`analogs` 
 CHARACTER SET cp1251 FIELDS TERMINATED BY '	' OPTIONALLY ENCLOSED BY '"' ESCAPED BY '"' LINES TERMINATED BY '\r\n' (`k`, `trash`, `brand`, `detail`);
 
+ALTER TABLE `analogs_source` COLLATE='utf8_general_ci';
 
 CREATE TABLE `analogs_res` (
 	`brand` VARCHAR(100) NULL DEFAULT NULL COMMENT 'бренд',
