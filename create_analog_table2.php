@@ -22,12 +22,19 @@
     foreach ($rows as $row) {
       foreach ($rowsTemp as $r) {
         if ($row['id'] != $r['id']) {
-          $insertStr .= "('".$row['detail']."','".$row['brand']."','".$r['detail']."','".$r['brand']."'),";
+          $insertStr .= "('".
+              iconv('windows-1251', 'utf-8', $row['detail'])."','".
+              iconv('windows-1251', 'utf-8', $row['brand'])."','".
+              iconv('windows-1251', 'utf-8', $r['detail'])."','".
+              iconv('windows-1251', 'utf-8', $r['brand'])."'),";
         }
       }
     }
     $insertStr = substr($insertStr, 0, -1);
-    $queryInsert = "insert ignore into analogue_orig values ".$insertStr;
+    _setQuery("insert ignore into analogue_orig values ".$insertStr);
+    
+    $insertStr = "insert ignore into analogue_orig_cp1251 values ".$insertStr;
+    $queryInsert = iconv('utf-8', 'windows-1251', $insertStr);
     _setQuery($queryInsert);
   }
   
@@ -58,12 +65,12 @@
       while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
         $resultArray[] = $row;
       }
-      mysql_free_result($result);
-      mysql_close($db);
-    } else {
+      /*mysql_free_result($result);
+      mysql_close($db);*/
+    } /*else {
       mysql_close($db);
       return array();
-    }
+    }*/
     
     return $resultArray;
   }
