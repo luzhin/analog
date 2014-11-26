@@ -10,6 +10,8 @@ COMMENT='Исходная таблица аналогов'
 COLLATE='cp1251_general_ci'
 ENGINE=InnoDB;
 
+ALTER TABLE `analogs_source` ADD INDEX `Индекс 2` (`k`);
+
 LOAD DATA LOCAL INFILE 'Z:\\home\\user\\Projects\\analog\\Analogs.txt' 
 INTO TABLE `temp`.`analogs` 
 CHARACTER SET cp1251 FIELDS TERMINATED BY '	' OPTIONALLY ENCLOSED BY '"' ESCAPED BY '"' LINES TERMINATED BY '\r\n' (`k`, `trash`, `brand`, `detail`);
