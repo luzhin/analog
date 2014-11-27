@@ -24,9 +24,9 @@
         if ($row['id'] != $r['id']) {
           $insertStr .= "('".
               prepareCharset($row['detail'])."','".
-              prepareCharset($row['brand']) ."','".
+              prepareCharsetCyr2Lat($row['brand']) ."','".
               prepareCharset($r['detail'])  ."','".
-              prepareCharset($r['brand'])   ."'),";
+              prepareCharsetCyr2Lat($r['brand'])   ."'),";
         }
       }
     }
@@ -85,8 +85,13 @@
   }
   
   function prepareCharset($str) {
-    $str = CyrillicToLatinica2($str);       //перегоняем кирилицу в латиницу
-    //return preg_replace("/\W/",'',$str);    //[a-zA-Z0-9]
+    $str = preg_replace("/[^a-zA-Z0-9]/",'',$str);    //[a-zA-Z0-9] остаются
+    return mb_strtolower($str, 'UTF-8');
+  }
+  
+  function prepareCharsetCyr2Lat($str) {
+    $str = CyrillicToLatinica2($str);                 //перегоняем кирилицу в латиницу
+    $str = preg_replace("/[^a-zA-Z0-9]/",'',$str);    //[a-zA-Z0-9] остаются
     return mb_strtolower($str, 'UTF-8');
   }
   
