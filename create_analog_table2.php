@@ -48,15 +48,12 @@
     } else {
       @mysql_select_db($databaseName, $db);
     }
-    
     $resultArray = array();
     
-    /*
-    mysql_query ("set_client='utf8'");
+    /*mysql_query ("set_client='utf8'");
     mysql_query ("set character_set_results='utf8'");
     mysql_query ("set collation_connection='utf8_general_ci'");
-    mysql_query ("SET NAMES utf8");
-    */
+    mysql_query ("SET NAMES utf8");*/
     
     $result = @mysql_query($query, $db);
     if (mysql_num_rows($result) > 0) {
@@ -82,6 +79,11 @@
     } else {
       @mysql_select_db($databaseName, $db);
     }
+    
+    /*mysql_query ("set_client='utf8'");
+    mysql_query ("set character_set_results='utf8'");
+    mysql_query ("set collation_connection='utf8_general_ci'");
+    mysql_query ("SET NAMES utf8");*/
     
     @mysql_query($query, $db);
     mysql_close($db);

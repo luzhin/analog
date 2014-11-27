@@ -7,23 +7,25 @@ CREATE TABLE `analogs_source` (
 	INDEX `Индекс 1` (`id`)
 )
 COMMENT='Исходная таблица аналогов'
-COLLATE='cp1251_general_ci'
-ENGINE=InnoDB;
+COLLATE='utf8_general_ci';
 
 ALTER TABLE `analogs_source` ADD INDEX `Индекс 2` (`k`);
 
-LOAD DATA LOCAL INFILE 'Z:\\home\\user\\Projects\\analog\\Analogs.txt' 
-INTO TABLE `temp`.`analogs` 
-CHARACTER SET cp1251 FIELDS TERMINATED BY '	' OPTIONALLY ENCLOSED BY '"' ESCAPED BY '"' LINES TERMINATED BY '\r\n' (`k`, `trash`, `brand`, `detail`);
-
-ALTER TABLE `analogs_source` COLLATE='utf8_general_ci';
-
-CREATE TABLE `analogs_res` (
-	`brand` VARCHAR(100) NULL DEFAULT NULL COMMENT 'бренд',
-	`detail` VARCHAR(200) NULL DEFAULT NULL COMMENT 'номер запчасти',
-	`brand_analog` VARCHAR(100) NULL DEFAULT NULL COMMENT 'бренд аналога',
-	`detail_analog` VARCHAR(200) NULL DEFAULT NULL COMMENT 'номер запчасти замены'
+CREATE TABLE `analogue_orig` (
+ `ArticalNum` VARCHAR(25) NOT NULL DEFAULT '',
+ `ArticalBrand` VARCHAR(50) NOT NULL DEFAULT '',
+ `Analogue` VARCHAR(25) NOT NULL DEFAULT '',
+ `Brand` VARCHAR(50) NOT NULL DEFAULT '',
+ UNIQUE INDEX `ArticalNum` (`ArticalNum`, `ArticalBrand`, `Analogue`, `Brand`),
+ INDEX `ArticalBrand` (`ArticalBrand`),
+ INDEX `Analogue` (`Analogue`),
+ INDEX `Brand` (`Brand`)
 )
 COMMENT='Результирующая таблица аналогов'
-COLLATE='cp1251_general_ci'
-ENGINE=InnoDB;
+COLLATE='utf8_general_ci'
+ENGINE=MyISAM;
+
+
+LOAD DATA LOCAL INFILE 'Z:\\home\\user\\Projects\\analog\\Analogs_utf8.txt' 
+INTO TABLE `temp_utf8`.`analogs_source` 
+CHARACTER SET utf8 FIELDS TERMINATED BY '	' OPTIONALLY ENCLOSED BY '"' ESCAPED BY '"' LINES TERMINATED BY '\r\n' (`k`, `trash`, `brand`, `detail`);
